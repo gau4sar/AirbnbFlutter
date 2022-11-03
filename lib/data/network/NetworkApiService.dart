@@ -11,7 +11,7 @@ class NetworkApiService implements BaseApiService {
     dynamic responseJson;
     try {
       final response =
-          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
+          await http.get(Uri.parse(url)).timeout(const Duration(seconds: 20));
 
       responseJson = returnResponse(response);
     } on SocketException {
@@ -26,7 +26,7 @@ class NetworkApiService implements BaseApiService {
     dynamic responseJson;
     try {
       final response =
-      await http.post(Uri.parse(url), body: data).timeout(const Duration(seconds: 10));
+      await http.post(Uri.parse(url), body: data).timeout(const Duration(seconds: 20));
 
       responseJson = returnResponse(response);
     } on SocketException {

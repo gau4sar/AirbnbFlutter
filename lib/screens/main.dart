@@ -1,10 +1,11 @@
 import 'package:airbnb_flutter/data/network/NetworkApiService.dart';
 import 'package:airbnb_flutter/repository/AirbnbListingRpository.dart';
-import 'package:airbnb_flutter/res/Colors.dart';
-import 'package:airbnb_flutter/res/components/RoundButton.dart';
+import 'package:airbnb_flutter/utils/Colors.dart';
 import 'package:airbnb_flutter/view_model/SharedViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'ExplorePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const ExplorePageWidget(),
     );
   }
 }
@@ -98,6 +99,14 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (context, index) {
             final item = sharedViewModel.listOfSpaces?[index];
 
+            var s ="${item?.fields?.city} ${item?.fields?.country}";
+            item?.fields?.price;
+
+            //https://public.opendatasoft.com/explore/dataset/airbnb-listings/files/1333549eac1ff1f91b4443e0dc910c3a/download/
+
+            //var s = "https://public.opendatasoft.com/explore/dataset/airbnb-listings/files/${item?.fields?.pictureUrl?.id}/download/";
+
+            var st = item?.fields?.pictureUrl?.id;
             return Text(
                 style:
                     const TextStyle(fontSize: 16, color: AppColors.blackColor),

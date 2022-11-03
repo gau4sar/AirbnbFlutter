@@ -1,6 +1,5 @@
 import '../data/network/BaseApiService.dart';
-import '../res/AppUrl.dart';
-import '../utils/utils.dart';
+import '../utils/AppUrl.dart';
 
 class AirbnbListingRepository {
   BaseApiService apiService;
