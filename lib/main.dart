@@ -1,7 +1,27 @@
+import 'package:airbnb_flutter/data/network/NetworkApiService.dart';
+import 'package:airbnb_flutter/repository/AirbnbListingRpository.dart';
+import 'package:airbnb_flutter/res/Colors.dart';
+import 'package:airbnb_flutter/res/components/RoundButton.dart';
+import 'package:airbnb_flutter/view_model/SharedViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
+
+  final sharedViewModel = SharedViewModel(
+      AirbnbRepo: AirbnbListingRepository(apiService: NetworkApiService()));
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider<SharedViewModel>.value(value: sharedViewModel),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -50,19 +70,43 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final sharedViewModel =
+          Provider.of<SharedViewModel>(context, listen: false);
+
+      sharedViewModel.getAirbnbListing(context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final sharedViewModel = Provider.of<SharedViewModel>(context);
+
+    return MaterialApp(
+      theme: ThemeData(backgroundColor: Colors.white),
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        body: ListView.builder(
+          /*shrinkWrap: true,*/
+          // Let the ListView know how many items it needs to build.
+          itemCount: sharedViewModel.listOfSpaces?.length,
+          // Provide a builder function. This is where the magic happens.
+          // Convert each item into a widget based on the type of item it is.
+          itemBuilder: (context, index) {
+            final item = sharedViewModel.listOfSpaces?[index];
+
+            return Text(
+                style:
+                    const TextStyle(fontSize: 16, color: AppColors.blackColor),
+                "City-> ${item?.fields?.city}  Property type-> ${item?.fields?.propertyType}");
+          },
+        ),
+      ),
+    );
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -75,26 +119,26 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+      body:
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          Column(
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
             const Text(
               'You have pushed the button this many times:',
             ),
@@ -102,14 +146,27 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+            /*RoundButton(
+              title: "Get list",
+              */ /*isLoading: sharedViewModel.isGetAirbnbListingApiLoading,*/ /*
+              onPress: () {
+                sharedViewModel.getAirbnbListing(context);
+              },
+            ),*/
+            ListView.builder(
+              /*shrinkWrap: true,*/
+              // Let the ListView know how many items it needs to build.
+              itemCount: sharedViewModel.listOfSpaces?.length,
+              // Provide a builder function. This is where the magic happens.
+              // Convert each item into a widget based on the type of item it is.
+              itemBuilder: (context, index) {
+                final item = sharedViewModel.listOfSpaces?[index];
+
+                return Text(
+                    "City-> ${item?.fields?.city}  Property type-> ${item?.fields?.propertyType}");
+              },
+            )
+          ]), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

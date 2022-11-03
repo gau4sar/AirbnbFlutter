@@ -7,10 +7,12 @@ class AirbnbListingRepository {
 
   AirbnbListingRepository({required this.apiService});
 
-  Future<String> getAirbnbListing() async {
+  Future<dynamic> getAirbnbListing() async {
     try {
+      dynamic response = apiService.getGetApiResponse(AppUrl.baseUrl);
+
       //call airbnb listing
-      return "lists";
+      return response;
     } catch (e) {
       rethrow;
     }
