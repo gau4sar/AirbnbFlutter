@@ -2,23 +2,28 @@ import 'package:airbnb_flutter/utils/custom_styles/CustomTextStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../view_model/SharedViewModel.dart';
+import '../../view_model/sharedViewModel.dart';
 
 class SpaceListBuilder extends StatelessWidget {
-  const SpaceListBuilder({Key? key}) : super(key: key);
+  var propertyType = "";
+
+  SpaceListBuilder({Key? key, required this.propertyType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final sharedViewModel = Provider.of<SharedViewModel>(context);
 
+    final filteredSpaceList = sharedViewModel.listOfSpaces
+        ?.where((record) => record.fields?.propertyType == propertyType)
+        .toList();
+
     return ListView.builder(
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
-      itemCount: sharedViewModel.listOfSpaces?.length,
+      itemCount: filteredSpaceList?.length,
       itemBuilder: (context, listViewIndex) {
-        var listViewSpaceRecord;
 
-        listViewSpaceRecord = sharedViewModel.listOfSpaces?[listViewIndex];
+        final listViewSpaceRecord = filteredSpaceList?[listViewIndex];
 
         return Visibility(
           visible:
@@ -127,7 +132,7 @@ class SpaceListBuilder extends StatelessWidget {
                             ),
                             Text(
                               style: CustomTextStyle.normalBold,
-                              "${listViewSpaceRecord.fields?.reviewScoresRating}",
+                              "${listViewSpaceRecord?.fields?.reviewScoresRating}",
                               /*style: FlutterFlowTheme
                                                               .of(context)
                                                               .bodyText1,*/
@@ -172,7 +177,7 @@ class SpaceListBuilder extends StatelessWidget {
                             children: [
                               Text(
                                 style: CustomTextStyle.normalBold,
-                                '\$${listViewSpaceRecord.fields?.price}',
+                                '\$${listViewSpaceRecord?.fields?.price}',
                                 /*style: FlutterFlowTheme
                                                                 .of(
                                                                 context)

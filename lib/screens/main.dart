@@ -1,15 +1,14 @@
 import 'package:airbnb_flutter/data/network/NetworkApiService.dart';
 import 'package:airbnb_flutter/repository/AirbnbListingRpository.dart';
 import 'package:airbnb_flutter/utils/Colors.dart';
-import 'package:airbnb_flutter/view_model/SharedViewModel.dart';
+import 'package:airbnb_flutter/view_model/sharedViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/widget/CustomTabWidget.dart';
 import 'ExplorePage.dart';
 
 void main() {
-  runApp(const MyApp());
-
   final sharedViewModel = SharedViewModel(
       AirbnbRepo: AirbnbListingRepository(apiService: NetworkApiService()));
   runApp(MultiProvider(
@@ -21,7 +20,7 @@ void main() {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyApp(),
+        home: ExplorePageWidget(),
       )));
 }
 

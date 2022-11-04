@@ -35,4 +35,28 @@ class Utils {
       print(msg);
     }
   }
+
+  String getPropertyIcon(String? propertyType) {
+
+    switch (propertyType) {
+      case "Apartment":
+        return "assets/apartment.png";
+      case "House":
+        return "assets/house.png";
+      case "Bed & Breakfast":
+        return "assets/bed_and_breakfast.png";
+      case "Condominium":
+        return "assets/condominium.png";
+      case "Loft":
+        return "assets/loft.png";
+      case "Townhouse":
+        return "assets/town_house.png";
+      case "Timeshare":
+        return "assets/timeshare.png";
+      case "GuestHouse":
+        return "assets/guest_house.png";
+      default:
+        return "assets/apartment.png";
+    }
+  }
 }

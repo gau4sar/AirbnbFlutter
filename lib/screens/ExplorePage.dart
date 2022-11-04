@@ -1,12 +1,13 @@
+import 'package:airbnb_flutter/screens/routes/RoutesName.dart';
 import 'package:airbnb_flutter/utils/Colors.dart';
-import 'package:airbnb_flutter/view_model/SharedViewModel.dart';
+import 'package:airbnb_flutter/utils/utils.dart';
+import 'package:airbnb_flutter/utils/widget/CustomTabWidget.dart';
+import 'package:airbnb_flutter/view_model/sharedViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../utils/custom_styles/CustomTextStyles.dart';
 import '../utils/items/SpaceListBuilder.dart';
-import '../utils/routes/RoutesName.dart';
 import '../utils/widget/CustomProgressBar.dart';
 import '../utils/widget/Spacer.dart';
 
@@ -34,6 +35,8 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
   @override
   Widget build(BuildContext context) {
     final sharedViewModel = Provider.of<SharedViewModel>(context);
+
+    int initPosition = 1;
 
     return Scaffold(
       key: scaffoldKey,
@@ -155,7 +158,31 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                       ? const CustomCircularProgressBar()
                       : Align(
                           alignment: const AlignmentDirectional(0, 0),
-                          child: DefaultTabController(
+                          child: CustomTabView(
+                            initPosition: initPosition,
+                            tabBarItemCount:
+                                sharedViewModel.listOfPropertyTypes!.length,
+                            tabBuilder: (context, index) => Tab(
+                              text: sharedViewModel.listOfPropertyTypes![index],
+                              icon: Image.asset(
+                                Utils().getPropertyIcon(sharedViewModel
+                                    .listOfPropertyTypes![index]),
+                                width: 32,
+                                height: 32,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            pageBuilder: (context, index) => SpaceListBuilder(
+                              propertyType:
+                                  sharedViewModel.listOfPropertyTypes![index]!,
+                            ),
+                            onPositionChange: (index) {
+                              print('current position: $index');
+                              initPosition = index;
+                            },
+                            onScroll: (position) => print('$position'),
+                            stub: null,
+                          ), /*DefaultTabController(
                             length: 6,
                             initialIndex: 0,
                             child: Column(
@@ -164,10 +191,10 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                   isScrollable: true,
                                   labelColor: Colors.black,
                                   labelStyle: CustomTextStyle.normalBold
-                                  /*FlutterFlowTheme.of(context).bodyText1.override(
+                                  */ /*FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Poppins',
                                       fontSize: 12,
-                                    )*/
+                                    )*/ /*
                                   ,
                                   indicatorColor: Colors.black,
                                   tabs: [
@@ -227,7 +254,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                 ),
                               ],
                             ),
-                          ),
+                          ),*/
                         ),
                 ),
               /*if (functions.isSpaceVisible('dont show1', 'dont show'))

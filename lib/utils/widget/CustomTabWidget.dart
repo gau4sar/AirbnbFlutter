@@ -1,8 +1,12 @@
+import 'package:airbnb_flutter/utils/custom_styles/CustomTextStyles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../view_model/SharedViewModel.dart';
 
 class CustomTabView extends StatefulWidget {
-  final int itemCount;
+  final int tabBarItemCount;
   final IndexedWidgetBuilder tabBuilder;
   final IndexedWidgetBuilder pageBuilder;
   final Widget? stub;
@@ -10,8 +14,8 @@ class CustomTabView extends StatefulWidget {
   final ValueChanged<double> onScroll;
   final int initPosition;
 
-  const CustomTabView({
-    required this.itemCount,
+  CustomTabView({
+    required this.tabBarItemCount,
     required this.tabBuilder,
     required this.pageBuilder,
     required this.stub,
@@ -33,20 +37,20 @@ class _CustomTabsState extends State<CustomTabView>
   @override
   void initState() {
     _currentPosition = widget.initPosition ?? 0;
-    TabController controller = TabController(
-      length: widget.itemCount,
+    controller = TabController(
+      length: widget.tabBarItemCount,
       vsync: this,
       initialIndex: _currentPosition,
     );
     controller.addListener(onPositionChange);
     controller.animation?.addListener(onScroll);
-    _currentCount = widget.itemCount;
+    _currentCount = widget.tabBarItemCount;
     super.initState();
   }
 
   @override
   void didUpdateWidget(CustomTabView oldWidget) {
-    if (_currentCount != widget.itemCount) {
+    if (_currentCount != widget.tabBarItemCount) {
       controller.animation?.removeListener(onScroll);
       controller.removeListener(onPositionChange);
       controller.dispose();
@@ -55,8 +59,8 @@ class _CustomTabsState extends State<CustomTabView>
         _currentPosition = widget.initPosition;
       }
 
-      if (_currentPosition > widget.itemCount - 1) {
-        _currentPosition = widget.itemCount - 1;
+      if (_currentPosition > widget.tabBarItemCount - 1) {
+        _currentPosition = widget.tabBarItemCount - 1;
         _currentPosition = _currentPosition < 0 ? 0 : _currentPosition;
         if (widget.onPositionChange is ValueChanged<int>) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -67,10 +71,10 @@ class _CustomTabsState extends State<CustomTabView>
         }
       }
 
-      _currentCount = widget.itemCount;
+      _currentCount = widget.tabBarItemCount;
       setState(() {
         controller = TabController(
-          length: widget.itemCount,
+          length: widget.tabBarItemCount,
           vsync: this,
           initialIndex: _currentPosition,
         );
@@ -94,28 +98,30 @@ class _CustomTabsState extends State<CustomTabView>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.itemCount < 1) return widget.stub ?? Container();
+    if (widget.tabBarItemCount < 1) return widget.stub ?? Container();
+
+/*
+    final sharedViewModel = Provider.of<SharedViewModel>(context);
+*/
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Container(
-          alignment: Alignment.center,
+          alignment: Alignment.centerLeft,
           child: TabBar(
-            isScrollable: true,
             controller: controller,
-            labelColor: Theme.of(context).primaryColor,
-            unselectedLabelColor: Theme.of(context).hintColor,
-            indicator: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 2,
-                ),
-              ),
-            ),
+            isScrollable: true,
+            labelColor: Colors.black,
+            labelStyle: CustomTextStyle.normalBold
+            /*FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 12,
+                                    )*/
+            ,
+            indicatorColor: Colors.black,
             tabs: List.generate(
-              widget.itemCount,
+              widget.tabBarItemCount,
               (index) => widget.tabBuilder(context, index),
             ),
           ),
@@ -124,7 +130,7 @@ class _CustomTabsState extends State<CustomTabView>
           child: TabBarView(
             controller: controller,
             children: List.generate(
-              widget.itemCount,
+              widget.tabBarItemCount,
               (index) => widget.pageBuilder(context, index),
             ),
           ),
@@ -145,7 +151,7 @@ class _CustomTabsState extends State<CustomTabView>
   onScroll() {
     if (widget.onScroll is ValueChanged<double>) {
       widget.onScroll(controller.animation?.value == null
-          ? 0.00
+          ? 0
           : controller.animation!.value);
     }
   }
