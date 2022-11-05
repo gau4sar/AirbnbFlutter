@@ -7,5 +7,5 @@ class RoutesName {
 
   static const String wishlist = "/wishlist_screen";
 
-  static const String search = "/search_screen";
+  static const String search = "/profile_screen";
 }

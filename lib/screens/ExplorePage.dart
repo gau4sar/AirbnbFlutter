@@ -19,7 +19,6 @@ class ExplorePageWidget extends StatefulWidget {
 }
 
 class _ExplorePageWidgetState extends State<ExplorePageWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -39,7 +38,6 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
     int initPosition = 1;
 
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: GestureDetector(
@@ -129,7 +127,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                       style: TextStyle(fontSize: 25),
                                     ),
                                     onPressed: () async {
-                                      gotoSearchPage();
+
                                     },
                                   )
                                 ],
@@ -734,7 +732,4 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
     );
   }
 
-  void gotoSearchPage() {
-    Navigator.pushNamed(context, RoutesName.search);
-  }
 }

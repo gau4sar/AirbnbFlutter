@@ -59,4 +59,18 @@ class Utils {
         return "assets/apartment.png";
     }
   }
+
+  String getCountryImage(String? country) {
+
+    switch (country) {
+      case "India":
+        return "assets/country.png";
+      case "Spain":
+        return "assets/spain.png";
+      case "Thailand":
+        return "assets/europe.png";
+      default:
+        return "assets/country.png";
+    }
+  }
 }

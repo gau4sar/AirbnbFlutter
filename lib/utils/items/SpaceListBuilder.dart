@@ -54,7 +54,7 @@ class SpaceListBuilder extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Align(
+                      /*const Align(
                         alignment: AlignmentDirectional(1, -1),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(4, 16, 16, 4),
@@ -62,39 +62,9 @@ class SpaceListBuilder extends StatelessWidget {
                             Icons.favorite,
                             color: Color(0xFFFF0B0B),
                             size: 25,
-                          ), /*ToggleIcon(
-                                                        onPressed:
-                                                            () async {
-                                                          final spaceUpdateData =
-                                                          {
-                                                            'fav':
-                                                            !listViewSpaceRecord
-                                                                .fav!,
-                                                          };
-                                                          await listViewSpaceRecord
-                                                              .reference
-                                                              .update(
-                                                              spaceUpdateData);
-                                                        },
-                                                        value:
-                                                        listViewSpaceRecord
-                                                            .fav!,
-                                                        onIcon: Icon(
-                                                          Icons.favorite,
-                                                          color: Color(
-                                                              0xFFFF0B0B),
-                                                          size: 25,
-                                                        ),
-                                                        offIcon: Icon(
-                                                          Icons
-                                                              .favorite_border,
-                                                          color:
-                                                          Colors.white,
-                                                          size: 25,
-                                                        ),
-                                                      ),*/
+                          ),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                   Padding(

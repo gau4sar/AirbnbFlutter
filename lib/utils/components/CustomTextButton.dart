@@ -1,3 +1,4 @@
+import 'package:airbnb_flutter/utils/custom_styles/CustomTextStyles.dart';
 import 'package:flutter/material.dart';
 import '../../utils/Colors.dart';
 
@@ -24,7 +25,7 @@ class CustomTextButton extends StatelessWidget {
                 )
               : Text(
                   title,
-                  style: const TextStyle(color: AppColors.blackColor),
+                  style: CustomTextStyle.normalBold,
                 )),
     );
   }

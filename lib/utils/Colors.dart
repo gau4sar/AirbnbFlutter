@@ -9,4 +9,6 @@ class AppColors{
   static const Color primaryText = Color(0xFF101213);
   static const Color normalText = Color(0xFF000000);
   static const Color lightText = Color(0xFF57636C);
+  static const Color primaryBackgroundColor = Color(0xFFF1F4F8);
+  static const Color transparent = Color(0x00ffffff);
 }
