@@ -1,13 +1,11 @@
 # Airbnb Flutter App
 
-| <img src="screenshots/ExploreApartment2.jpg" width="200"/> | <img src="screenshots/ExploreGuestHouse2.jpg" width="200"/> | <img src="screenshots/SearchPage2.jpg" width="200"/> |
-| :-----------------------------------------------: | :-------------------------------------------------------: | :-------------------------------------------------------: |
 
 <table style="width:100%; table-layout:fixed;">
   <tr>
-    <td style="width:33%; text-align:center;"><img src="screenshots/ExploreApartment2.jpg" alt="Home Page" style="width:100%;"/></td>
-    <td style="width:33%; text-align:center;"><img src="screenshots/ExploreGuestHouse2.jpg" alt="Listing Details" style="width:100%;"/></td>
-    <td style="width:33%; text-align:center;"><img src="screenshots/SearchPage2.jpg" alt="Search Results" style="width:100%;"/></td>
+    <td style="width:33.33%; text-align:center; padding:5px;"><img src="screenshots/ExploreApartment2.jpg" alt="Explore Page" style="width:100%;"/></td>
+    <td style="width:33.33%; text-align:center; padding:5px;"><img src="screenshots/ExploreGuestHouse2.jpg" alt="Explore Pag" style="width:100%;"/></td>
+    <td style="width:33.33%; text-align:center; padding:5px;"><img src="screenshots/SearchPage2.jpg" alt="Search Page" style="width:100%;"/></td>
   </tr>
 </table>
 
